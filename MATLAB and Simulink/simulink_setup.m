@@ -1,7 +1,7 @@
 %% geometry and mass properties
 clear
-tf = 4;
-dt = 0.005
+tf = 10;
+dt = 0.005;
 m = 0.3; % mass [kg]
 g = 9.81; % acceleration due to gravity [m/s^2]
 Jxx = 0.00447; % moment of inertia about x axis [kg-m^2]
@@ -54,13 +54,13 @@ flap_rate = 400;
 
 %%
 u = [out.flaps out.motors];
-t = 0:dt:tf;
 euler = out.euler;
 omega = out.omega;
 V = squeeze(out.V)';
 X = squeeze(out.V)';
 quat = out.quat;
 accel = squeeze(out.accel)';
+t = 0:dt:dt*(length(u)-1);
 
 figure
 subplot(2,2,1)
@@ -156,4 +156,4 @@ pos_traj = X;
 
 
 % run_animation_tailsitter
-position_animation
+% position_animation
