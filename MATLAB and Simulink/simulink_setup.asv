@@ -37,7 +37,7 @@ motor_eq = xeq(end);
 Kq = 1;
 Kqi = 20;
 Kp = 1;
-Kpi = 10;
+Kpi = 0;
 Kr = 1;
 Kri = 10;
 Kt = -5;
@@ -157,5 +157,5 @@ att_traj = quat;
 pos_traj = X;
 
 %%
-% run_animation_tailsitter
-position_animation
+run_animation_tailsitter
+% position_animation

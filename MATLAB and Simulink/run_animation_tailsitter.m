@@ -18,10 +18,10 @@ movie_file_name = 'drone_flight';
 % update the figure (CPU/GPU constraints)
 frame_sample_time = max(0.02, tout(2)-tout(1));
 % Resample the time vector to modify the reproduction speed
-t_new   = tout(1):frame_sample_time*(speedx):tout(end);
+t_new   = (tout(1):frame_sample_time*(speedx):tout(end))';
 % Resample the recorded data
 % act     = interp1(tout, act, t_new','linear');
-stick   = interp1(tout, stick, t_new','linear');
+stick   = interp1(tout, stick', t_new','linear');
 y_new   = interp1(tout, yout, t_new','linear');
 % We have to be careful with angles with ranges
 y_new(:, 1)  = atan2(interp1(tout, sin(yout(:, 1)), t_new','linear'), interp1(tout, cos(yout(:, 1)), t_new','linear')) * 180 / pi;
