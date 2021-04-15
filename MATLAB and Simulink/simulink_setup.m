@@ -1,5 +1,4 @@
 %% geometry and mass properties
-tf = 10;
 dt = 0.005;
 m = 0.3; % mass [kg]
 g = 9.81; % acceleration due to gravity [m/s^2]
@@ -9,6 +8,7 @@ Jzz = 0.00512; % moment of inertia about z axis [kg-m^2]
 Jxz = -0.00001; % cross-product of inertia xz [kg-m^2]
 J = [Jxx 0 -Jxz; 0 Jyy 0; -Jxz 0 Jzz];
 S_w = 0.0828; % wing area [m^2]
+tf = 10;
 
 c_bar = 0.142; % mean aerodynamic chord [m]
 b = 0.6; % wing span [m]

@@ -94,8 +94,3 @@ save('test.mat', 'yout', 'stick', 'tout');
 
 att_traj = quat;
 pos_traj = X;
-
-%%
-% run_animation_tailsitter
-%%
-position_animation
