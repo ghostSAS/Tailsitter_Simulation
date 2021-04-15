@@ -1,5 +1,4 @@
 %% geometry and mass properties
-clear
 tf = 10;
 dt = 0.005;
 m = 0.3; % mass [kg]
