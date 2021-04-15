@@ -38,124 +38,32 @@ Kq = 1;
 Kqi = 20;
 Kp = 1;
 Kpi = 10;
-Kr = 1;
-Kri = 10;
+Kr = 5;
+Kri = 20;
 Kt = -5;
 Kti = -100;
-Kvz = -20;
-Kvzi = -10;
+Ku = -2;
+Kui = -2;
+Kv = 5;
+Kvi = 4;
+Kw = 1;
 Kd = 0.01;
 
-% KP = diag([Kt Kp Kq Kr]);
-% KI = diag([Kti Kpi Kqi Kri]);
+Kx = 0.2;
+Ky = 0.2;
+Kh = -1;
+Khi = -0.1;
+
 M_motor = [1 1; 1 -1];
 M_flap = [-1 1; -1 -1];
 flap_max = 20;
 flap_rate = 400;
 
-%%
-close all
-u = [out.flaps out.motors];
-euler = out.euler;
-omega = out.omega;
-V = squeeze(out.V_NED)';
-X = squeeze(out.pos)';
-quat = out.quat;
-accel = squeeze(out.accel)';
-t = 0:dt:dt*(length(u)-1);
+z0 = -2;
 
-figure
-subplot(2,2,1)
-plot(t,u(:,1))
-ylabel('f left (deg)')
-subplot(2,2,2)
-plot(t,u(:,2))
-ylabel('f right (deg)')
-subplot(2,2,3)
-plot(t,u(:,3))
-ylabel('n left (rev/s)')
-subplot(2,2,4)
-plot(t,u(:,4))
-ylabel('n right (rev/s)')
-sgtitle('u')
+load LQR.mat
+%states order is: P Q R q1 q2 q3 u v w X Y Z
+Q =         diag([0 0 0 100 100 100 0 0 0 1 1 100]);
+R = eye(4);
+K_lqr = lqr(A_lin, B_lin, Q, R)
 
-euler = rad2deg(unwrap(euler));
-
-
-figure
-subplot(3,1,1)
-plot(t,euler(:,3))
-ylabel('\phi (deg)')
-subplot(3,1,2)
-plot(t,euler(:,2))
-ylabel('\theta (deg)')
-subplot(3,1,3)
-plot(t,euler(:,1))
-ylabel('\psi (deg)')
-sgtitle('Euler angles')
-
-figure
-subplot(3,1,1)
-plot(t,omega(:,1))
-ylabel('P (rad/s)')
-subplot(3,1,2)
-plot(t,omega(:,2))
-ylabel('Q(rad/s)')
-subplot(3,1,3)
-plot(t,omega(:,3))
-ylabel('R (rad/s)')
-sgtitle('PQR')
-
-figure
-subplot(3,1,1)
-plot(t,V(:,1))
-ylabel('V_x (m/s)')
-subplot(3,1,2)
-plot(t,V(:,2))
-ylabel('V_y (m/s)')
-subplot(3,1,3)
-plot(t,V(:,3))
-ylabel('V_z (m/s)')
-sgtitle('V')
-
-% S_w = 0.08;
-% rho = 1.225;
-% 
-% ram_drag = [-sign(x(:,8))*0.5*rho.*x(:,8).^2*S_w*0.1, ...
-%     -sign(x(:,9))*0.5*rho.*x(:,9).^2*S_w*0.1, ...
-%     -sign(x(:,10))*0.5*rho.*x(:,10).^2*S_w*1.3];
-% figure
-% plot(t,ram_drag)
-% title('Drag in vehicle frame')
-% legend({'X', 'Y', 'Z'})
-
-figure
-plot(t,accel)
-legend({'X', 'Y', 'Z'})
-title('accelerations in vehicle frame')
-
-figure
-subplot(3,1,1)
-plot(t,X(:,1))
-ylabel('x (m)')
-subplot(3,1,2)
-plot(t,X(:,2))
-ylabel('y (m)')
-subplot(3,1,3)
-plot(t,X(:,3))
-ylabel('z (m)')
-sgtitle('x')
-
-yout = [unwrap(quat2eul(quat)) -X(:,3) quat];
-% u_interp = interp1(t, u, t, 'linear');
-% stick = [elevator', aileron'];
-stick = 0*[t; t];
-tout = t';
-save('test.mat', 'yout', 'stick', 'tout');
-
-att_traj = quat;
-pos_traj = X;
-
-%%
-% run_animation_tailsitter
-position_animation

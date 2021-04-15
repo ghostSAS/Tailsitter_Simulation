@@ -139,6 +139,6 @@ lin_sys = ss(A_lin,B_lin,C_lin,D_lin, 'statename', ...
 {'P', 'Q', 'R', 'q1', 'q2', 'q3', 'u', 'v', 'w',...
 'x', 'y', 'z',}, 'outputname', {'Ax', 'Ay', 'Az', 'p', 'q', 'r', 'h'})
 
-% [A_bar,B_bar,C_bar,T,k] = ctrbf(A_lin,B_lin,C_lin)
+K_lqr = lqr(A_lin,B_lin,eye(12),eye(4))
 
-rank_ctrb = rank(ctrb(A_lin,B_lin))
+save('LQR.mat', 'A_lin', 'B_lin');

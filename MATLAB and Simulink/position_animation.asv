@@ -65,12 +65,11 @@ shape.wing.color = 'g';
 
 % plot
 viewRange = compute_viewRange(pos_traj);
-
 figure
 for i=1:10:size(pos_traj,1)
-    
     sgtitle(['Time =' num2str((i-1)*dt,'%.2f')])
     pos = pos_traj(i,:);
+%     pos(3) = -pos(3);
     att = att_traj(i,:);
     
     T_shape = trans(pos, att, shape);
@@ -82,13 +81,13 @@ for i=1:10:size(pos_traj,1)
     end 
     axis equal
     grid on
-
+    f = figure(1);
+    f.CurrentAxes.ZDir = 'Reverse';
     axis(viewRange);
     view([44 16])
     xlabel('x'); ylabel('y'); zlabel('z')
-    set(gca, 'ZDir','reverse')
-    set(gca, 'YDir','reverse')
     drawnow
+    
     pause(time_delay)
     hold off
     
@@ -96,6 +95,7 @@ end
 
 
 function range = compute_viewRange(traj)
+% traj(:,3)=-traj(:,3);
     range = [min(traj(:,1)) max(traj(:,1)) min(traj(:,2)) max(traj(:,2)) min(traj(:,3)) max(traj(:,3))];
     midPt = [min(traj(:,1))+max(traj(:,1)) min(traj(:,1))+max(traj(:,1)) ...
                 min(traj(:,2))+max(traj(:,2)) min(traj(:,2))+max(traj(:,2)) ...
@@ -121,7 +121,7 @@ function shape = trans(pos, att, shape)
 %                  cos(b)*sin(a), cos(a)*cos(c) + sin(a)*sin(b)*sin(c), cos(c)*sin(a)*sin(b) - cos(a)*sin(c);
 %                        -sin(b),                        cos(b)*sin(c),                        cos(b)*cos(c)];
 %        
-T_rotate = quat2dcm([1 0 -1 0])*quat2dcm(att)';
+T_rotate = quat2dcm([-1 0 1 0])*quat2dcm(att);
     T_move = pos(:);
     
     % compute the rotated airplane
