@@ -9,6 +9,9 @@
 # OSX / *nix default autosave extension
 *.m~
 
+# stored matrix file
+*.mat
+
 # Compiled MEX binaries (all platforms)
 *.mex*
 
