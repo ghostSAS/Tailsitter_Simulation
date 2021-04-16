@@ -4,13 +4,13 @@
 
 ### MATLAB ###
 # Windows default autosave extension
-*.asv
+**/*.asv
 
 # OSX / *nix default autosave extension
-*.m~
+**/*.m~
 
 # stored matrix file
-*.mat
+**/*.mat
 
 # Compiled MEX binaries (all platforms)
 *.mex*
@@ -23,8 +23,8 @@
 helpsearch*/
 
 # Simulink code generation folders
-slprj/
-sccprj/
+**/slprj/
+**/sccprj/
 
 # Matlab code generation folders
 codegen/

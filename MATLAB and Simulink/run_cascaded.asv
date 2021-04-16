@@ -1,3 +1,0 @@
-simulink_setup;
-sim('tailsitter_simulation_cascaded');
-simulink_
