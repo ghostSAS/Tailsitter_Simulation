@@ -10,7 +10,7 @@ w_cmd = 0;
 x_cmd = 0;
 y_cmd = 0;
 h_cmd = 2;
-
+dd
 tf = 20;
 
 simulink_setup;

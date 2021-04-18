@@ -10,6 +10,9 @@
 *.m~
 *.mat
 
+# stored matrix file
+*.mat
+
 # Compiled MEX binaries (all platforms)
 *.mex*
 
