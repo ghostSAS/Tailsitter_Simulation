@@ -9,6 +9,7 @@
 # OSX / *nix default autosave extension
 *.m~
 *.mat
+!tailsitter_3d_model.mat
 
 # stored matrix file
 *.mat
