@@ -21,13 +21,18 @@ rho = 1.225; % air density [kg/m^3]
 % CL_0 = 0.147; % lift coefficient at 0 angle of attack (AoA)
 CL_0=0;
 CL_f = 0.036; % lift coefficient per flap deflection [1/deg]
+CL_a = 3.8256; %lift coefficient per alpha [1/rad]
 CD_f = 0.000762;
 % Cm_0 = -0.065; % moment coefficient at 0 AoA
 Cm_0 = 0;
 Cm_f = -0.0102; % moment coefficient per flap deflection [1/deg]
+Cm_a = -0.3737;
 CT = 0.05; % thrust coefficient
 CP = 0.01; % power coefficient
 Cl_f = 0.0057;
+Cl_b = -0.0152;
+eff = 0.9929;
+AR = 4.348;
 
 xeq = fsolve(@nonlinear_dynamics_eq, [zeros(3,1); 1; zeros(11,1); 240; 240]);
 
@@ -58,7 +63,7 @@ M_flap = [-1 1; -1 -1];
 flap_max = 20;
 flap_rate = 400;
 
-z0 = -2;
+z0 = -5;
 
 load LQR.mat
 %states order is: P Q R q1 q2 q3 u v w X Y Z

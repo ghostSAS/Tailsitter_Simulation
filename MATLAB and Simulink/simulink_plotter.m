@@ -3,7 +3,9 @@ close all
 u = [out.flaps out.motors];
 euler = out.euler;
 omega = out.omega;
-V = squeeze(out.V_NED)';
+V = squeeze(out.V)';
+alpha = squeeze(out.alpha);
+V_NED = squeeze(out.V_NED)';
 X = squeeze(out.pos)';
 quat = out.quat;
 accel = squeeze(out.accel)';
@@ -53,13 +55,13 @@ sgtitle('PQR')
 
 figure
 subplot(3,1,1)
-plot(t,V(:,1))
+plot(t,V_NED(:,1))
 ylabel('V_x (m/s)')
 subplot(3,1,2)
-plot(t,V(:,2))
+plot(t,V_NED(:,2))
 ylabel('V_y (m/s)')
 subplot(3,1,3)
-plot(t,V(:,3))
+plot(t,V_NED(:,3))
 ylabel('V_z (m/s)')
 sgtitle('V')
 
@@ -86,6 +88,10 @@ xlabel('x (m)')
 ylabel('y (m)')
 grid on
 title('XY Position')
+
+figure
+plot(t, rad2deg(alpha))
+title('alpha (deg)')
 
 yout = [unwrap(quat2eul(quat)) -X(:,3) quat];
 stick = 0*[t; t];

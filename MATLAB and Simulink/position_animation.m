@@ -121,7 +121,7 @@ function shape = trans(pos, att, shape)
 %                  cos(b)*sin(a), cos(a)*cos(c) + sin(a)*sin(b)*sin(c), cos(c)*sin(a)*sin(b) - cos(a)*sin(c);
 %                        -sin(b),                        cos(b)*sin(c),                        cos(b)*cos(c)];
 %        
-T_rotate = quat2dcm([1 0 -1 0])*quat2dcm(att)';
+T_rotate = quat2dcm(att)'; %quat2dcm([1 0 -1 0])*
     T_move = pos(:);
     
     % compute the rotated airplane
