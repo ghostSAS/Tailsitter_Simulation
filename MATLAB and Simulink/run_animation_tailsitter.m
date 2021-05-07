@@ -34,9 +34,9 @@ bank_deg              =  y_new(:, 3);
 roll_command          =  stick(:, 1);
 pitch_command         =  stick(:, 2);
 quat                  =  y_new(:, 5:8);
-angle_of_attack_deg   =  0*y_new(:,1);
-angle_of_sideslip_deg = 0*y_new(:,1);
-fligh_path_angle_deg   = 0*y_new(:,1);
+angle_of_attack_deg   =  y_new(:,9);
+angle_of_sideslip_deg =  y_new(:,10);
+fligh_path_angle_deg   = y_new(:,2) - y_new(:,9);
 altitude_ft           =  y_new(:, 4);
 % Flight control surfaces
 % le     = act(:, 9);

@@ -1,9 +1,9 @@
 clear
-roll_angle_cmd = 00;
-pitch_angle_cmd = 90;
-yaw_angle_cmd = 20;
+roll_angle_cmd = 0;
+pitch_angle_cmd = 0;
+yaw_angle_cmd = 0;
 
-u_cmd = 0;
+u_cmd = 10;
 v_cmd = 0;
 w_cmd = 0;
 

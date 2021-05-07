@@ -193,18 +193,18 @@ hdle_text_gam               = text(0.45 * AC_DIMENSION * 1.5, 0.55 * AC_DIMENSIO
 hdle_text_nz                = text(0.45 * AC_DIMENSION * 1.5, 0.55 * AC_DIMENSION * 1.5, 0.56 * AC_DIMENSION * 1.5, '', 'Color',text_color, 'FontSize', FontSize, 'FontName', font_name);
 
 % Aerodynamic Speed Vector initialization
-Lbh_i = quat2dcm([-1 0 1 0])*quat2rotm(quat(i,:));
+Lbh_i = quat2rotm(quat(i,:));%quat2dcm([-1 0 1 0])*
 Vaer  = Lbh_i * Lbw(angle_of_attack_deg(1), angle_of_sideslip_deg(1)) * [AC_DIMENSION; 0; 0];
 X_aer = [0, -Vaer(1)];
 Y_aer = [0, +Vaer(2)];
 Z_aer = [0, Vaer(3)];
 
-Vaer_angle_of_sideslip0  = Lbh_i' * Lbw(angle_of_attack_deg(i), 0) * [AC_DIMENSION; 0; 0];
+Vaer_angle_of_sideslip0  = Lbh_i * Lbw(angle_of_attack_deg(i), 0) * [AC_DIMENSION; 0; 0];
 X_aer_angle_of_sideslip0 = [0, -Vaer_angle_of_sideslip0(1), -Vaer(1)];
 Y_aer_angle_of_sideslip0 = [0, +Vaer_angle_of_sideslip0(2), +Vaer(2)];
 Z_aer_angle_of_sideslip0 = [0, -Vaer_angle_of_sideslip0(3), -Vaer(3)];
 
-Vaer_angle_of_attack0angle_of_sideslip0  = Lbh_i' * Lbw(0, 0) * [AC_DIMENSION; 0; 0];
+Vaer_angle_of_attack0angle_of_sideslip0  = Lbh_i * Lbw(0, 0) * [AC_DIMENSION; 0; 0];
 X_aer_angle_of_attack0angle_of_sideslip0 = [0, -Vaer_angle_of_attack0angle_of_sideslip0(1), -Vaer_angle_of_sideslip0(1)];
 Y_aer_angle_of_attack0angle_of_sideslip0 = [0, +Vaer_angle_of_attack0angle_of_sideslip0(2), +Vaer_angle_of_sideslip0(2)];
 Z_aer_angle_of_attack0angle_of_sideslip0 = [0, -Vaer_angle_of_attack0angle_of_sideslip0(3), -Vaer_angle_of_sideslip0(3)];
@@ -239,26 +239,26 @@ xlabel('Roll Command'); ylabel('Pitch Command')
 tic;
 for i=1:length(heading_deg)
     
-%     % Pitch disc
-%     M = makehgtform('zrotate', -heading_deg(i)* pi / 180);      % Heading rotation
-%     set(euler_hgt(3), 'Matrix', M)
-%     
-%     % Roll disc
-%     M1 = makehgtform('zrotate',  -heading_deg(i) * pi / 180);   % Heading rotation
-%     M2 = makehgtform('yrotate', pitch_deg(i) * pi / 180);   % Pitch rotation
-%     set(euler_hgt(2), 'Matrix', M1 * M2)
-%     
-%     % Roll line
-%     M = makehgtform('xrotate', -bank_deg(i) * pi / 180);
-%     set(euler_hgt(5), 'Matrix', M)
-%     
-%     % Pitch line
-%     M = makehgtform('yrotate', pitch_deg(i) * pi / 180);
-%     set(euler_hgt(6), 'Matrix', M)
-%     
-%     % Heading line
-%     M = makehgtform('zrotate', -heading_deg(i) * pi / 180);
-%     set(euler_hgt(7), 'Matrix', M)
+    % Pitch disc
+    M = makehgtform('zrotate', -heading_deg(i)* pi / 180);      % Heading rotation
+    set(euler_hgt(3), 'Matrix', M)
+    
+    % Roll disc
+    M1 = makehgtform('zrotate',  -heading_deg(i) * pi / 180);   % Heading rotation
+    M2 = makehgtform('yrotate', pitch_deg(i) * pi / 180);   % Pitch rotation
+    set(euler_hgt(2), 'Matrix', M1 * M2)
+    
+    % Roll line
+    M = makehgtform('xrotate', -bank_deg(i) * pi / 180);
+    set(euler_hgt(5), 'Matrix', M)
+    
+    % Pitch line
+    M = makehgtform('yrotate', pitch_deg(i) * pi / 180);
+    set(euler_hgt(6), 'Matrix', M)
+    
+    % Heading line
+    M = makehgtform('zrotate', -heading_deg(i) * pi / 180);
+    set(euler_hgt(7), 'Matrix', M)
     
     % AIRCRAFT BODY
     M1 = makehgtform('zrotate',  -heading_deg(i) * pi / 180);  % Heading rotation
@@ -267,7 +267,7 @@ for i=1:length(heading_deg)
 %     set(AV_hg, 'Matrix',M1 * M2 * M3)
     M = M1*M2*M3;
 %     M_q = blkdiag(quat2dcm(quat(i,:))*quat2dcm([-1 0 1 0]), 1);
-    M_q = blkdiag(quat2dcm([-1 0 1 0])*quat2rotm(quat(i,:)), 1);
+    M_q = blkdiag(quat2rotm(quat(i,:)), 1);%quat2dcm([-1 0 1 0])
     set(AV_hg,'Matrix', M_q)
     
     % controls_deflection_deg
@@ -275,16 +275,16 @@ for i=1:length(heading_deg)
     
     % Compute Aerodynamic Speed Vector
 %     Lbh_i = Lbh(heading_deg(i), pitch_deg(i), bank_deg(i));
-    Lbh_i = quat2dcm([-1 0 1 0])*quat2rotm(quat(i,:));
-    Vaer  = Lbh_i * Lbw(angle_of_attack_deg(i), angle_of_sideslip_deg(i)) * [AC_DIMENSION; 0; 0];
+    Lbh_i = quat2rotm(quat(i,:)); %quat2dcm([-1 0 1 0])*
+    Vaer  = Lbh_i* Lbw(angle_of_attack_deg(i), angle_of_sideslip_deg(i)) * [AC_DIMENSION; 0; 0];
     X_aer = [0, -Vaer(1)];
-    Y_aer = [0, -Vaer(2)];
+    Y_aer = [0, +Vaer(2)];
     Z_aer = [0, -Vaer(3)];
     
     n_p = 10;
     Vaer_angle_of_sideslip0 = zeros(n_p, 3);
     for ik = 1:n_p
-        Vaer_angle_of_sideslip0(ik, :) = Lbh_i' * Lbw(angle_of_attack_deg(i), angle_of_sideslip_deg(i) * (ik - 1) / (n_p - 1)) * [AC_DIMENSION; 0; 0];
+        Vaer_angle_of_sideslip0(ik, :) = Lbh_i * Lbw(angle_of_attack_deg(i), angle_of_sideslip_deg(i) * (ik - 1) / (n_p - 1)) * [AC_DIMENSION; 0; 0];
     end
     X_aer_angle_of_sideslip0 = [0, -Vaer_angle_of_sideslip0(:, 1)'];
     Y_aer_angle_of_sideslip0 = [0, +Vaer_angle_of_sideslip0(:, 2)'];
@@ -292,7 +292,7 @@ for i=1:length(heading_deg)
     
     Vaer_angle_of_attack0angle_of_sideslip0 = zeros(n_p, 3);
     for ik=1:n_p
-        Vaer_angle_of_attack0angle_of_sideslip0(ik, :)=Lbh_i'*Lbw(angle_of_attack_deg(i)*(ik-1)/(n_p-1),0)*[AC_DIMENSION;0;0];
+        Vaer_angle_of_attack0angle_of_sideslip0(ik, :)=Lbh_i*Lbw(angle_of_attack_deg(i)*(ik-1)/(n_p-1),0)*[AC_DIMENSION;0;0];
     end
     X_aer_angle_of_attack0angle_of_sideslip0 = [0, -Vaer_angle_of_attack0angle_of_sideslip0(:, 1)'];
     Y_aer_angle_of_attack0angle_of_sideslip0 = [0, +Vaer_angle_of_attack0angle_of_sideslip0(:, 2)'];

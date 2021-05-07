@@ -5,6 +5,7 @@ euler = out.euler;
 omega = out.omega;
 V = squeeze(out.V)';
 alpha = squeeze(out.alpha);
+beta = squeeze(out.beta);
 V_NED = squeeze(out.V_NED)';
 X = squeeze(out.pos)';
 quat = out.quat;
@@ -93,7 +94,7 @@ figure
 plot(t, rad2deg(alpha))
 title('alpha (deg)')
 
-yout = [unwrap(quat2eul(quat)) -X(:,3) quat];
+yout = [unwrap(quat2eul(quat)) -X(:,3) quat rad2deg(alpha) rad2deg(beta)];
 stick = 0*[t; t];
 tout = t';
 save('test.mat', 'yout', 'stick', 'tout');
